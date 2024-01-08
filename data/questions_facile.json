@@ -1,5 +1,5 @@
 {
-  "quizz": [
+  "quiz": [
     {
       "name": "question1",
       "type": "checkbox",
@@ -62,9 +62,7 @@
         {"label" : "Madrid", "value" : "madrid"},
         {"label" : "Rome", "value" : "rome"}
         ],
-        "correct_answer" : "berlin",
-        "explanation" : "Berlin est la capitale de l'Allemagne",
-        "explanation_image" : "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Flag_of_Berlin.svg/1200px-Flag_of_Berlin.svg.png"
+        "correct_answer" : "berlin"
     }
   ]
 }

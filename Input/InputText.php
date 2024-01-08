@@ -1,19 +1,11 @@
 <?php
 
-require 'Input.php';
-
 class InputText extends Input
 {
-    public function __construct(string $name, string $id, string $placeholder, string $value)
+    public function __construct(string $name, string $id, string $placeholder, string $value, string $label)
     {
-        parent::__construct($name, $id, $placeholder, $value);
+        parent::__construct($name, $id, $placeholder, $value, $label);
     }
-
-
-
-
-
-
 
     public function render(): string
     {

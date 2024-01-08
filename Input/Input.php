@@ -9,13 +9,15 @@ abstract class Input implements IRender
     protected string $placeholder;
     protected string $id;
     protected string $name;
+    protected string $label;
 
-    public function __construct(string $name, string $id, string $placeholder, string $value)
+    public function __construct(string $name, string $id, string $placeholder, string $value, string $label)
     {
         $this->name = $name;
         $this->id = $id;
         $this->placeholder = $placeholder;
         $this->value = $value;
+        $this->label = $label;
     }
 
     public function getValue(): string
