@@ -1,0 +1,70 @@
+{
+  "quizz": [
+    {
+      "name": "question1",
+      "type": "checkbox",
+      "question": "Quelles sont les couleurs du drapeau français ?",
+      "options": [
+        {"label": "Rouge", "value": "red"},
+        {"label": "Blanc", "value": "white"},
+        {"label": "Bleu", "value": "blue"},
+        {"label": "Vert", "value": "green"}
+      ],
+      "correct_answers": ["red", "white", "blue"]
+    },
+    {
+      "name": "question2",
+      "type": "radio",
+      "question": "Quelle est la plus grande planète du système solaire ?",
+      "options": [
+        {"label": "Mercure", "value": "mercury"},
+        {"label": "Jupiter", "value": "jupiter"},
+        {"label": "Terre", "value": "earth"},
+        {"label": "Vénus", "value": "venus"}
+      ],
+      "correct_answer": "jupiter"
+    },
+
+    {
+      "name": "question3",
+      "type": "text",
+      "question": "Quelle est la capitale de la France ?",
+      "correct_answer": "Paris"
+    },
+
+    {
+      "name": "question4",
+      "type": "text",
+      "question": "Quelle est la capitale de l'Espagne ?",
+      "correct_answer": "Madrid"
+    },
+
+    {
+      "name": "question5",
+      "type": "text",
+      "question": "Quelle est la capitale de l'Italie ?",
+      "correct_answer": "Rome"
+    },
+
+    {
+      "name": "question6",
+      "type": "text",
+      "question": "Quelle est la capitale de l'Allemagne ?",
+      "correct_answer": "Berlin"
+    },
+    {
+      "name" : "testRadio",
+        "type" : "radio",
+        "question" : "Quelle est la capitale de l'Allemagne ?",
+        "options" : [
+        {"label" : "Berlin", "value" : "berlin"},
+        {"label" : "Paris", "value" : "paris"},
+        {"label" : "Madrid", "value" : "madrid"},
+        {"label" : "Rome", "value" : "rome"}
+        ],
+        "correct_answer" : "berlin",
+        "explanation" : "Berlin est la capitale de l'Allemagne",
+        "explanation_image" : "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Flag_of_Berlin.svg/1200px-Flag_of_Berlin.svg.png"
+    }
+  ]
+}
