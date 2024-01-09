@@ -3,9 +3,9 @@
 
 class InputSubmit extends Input
 {
-    public function __construct(string $name, string $id, string $placeholder, string $value, string $label)
+    public function __construct(string $name, string $id, string $value, string $label)
     {
-        parent::__construct($name, $id, $placeholder, $value, $label);
+        parent::__construct($name, $id, '', $value, $label);
     }
 
     public function render(): string

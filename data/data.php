@@ -18,6 +18,6 @@ function lis_questions_csv($fichier_csv)
     return $questions;
 }
 
-
+var_dump(lis_questions_json('questions_facile.json'));
 ?>
 

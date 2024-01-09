@@ -3,9 +3,9 @@
 class InputCheckbox extends Input
 {
 
-    public function __construct(string $name, string $id, string $value)
+    public function __construct(string $name, string $id, string $value, string $label)
     {
-        parent::__construct($name, $id, "checkbox", $value);
+        parent::__construct($name, $id, '', $value, $label);
     }
 
     public function render(): string
