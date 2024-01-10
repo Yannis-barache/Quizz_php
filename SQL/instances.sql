@@ -16,13 +16,7 @@ INSERT INTO QUESTION(id_question, description, id_quiz) VALUES
 (9, 'Quelle est la capitale de l''Italie ?', 2),
 (10, 'Quelle est la capitale de l''Allemagne ?', 2),
 (11, 'Quelle est la capitale de la Belgique ?', 2),
-(12, 'Quelle est la capitale de la Suisse ?', 2),
-(13, 'Quelle est la capitale de la Russie ?', 2),
-(14, 'Quelle est la capitale de la Chine ?', 2),
-(15, 'Quelle est la capitale de l''Inde ?', 2),
-(16, 'Quelle est la capitale du Japon ?', 2),
-(17, 'Quelle est la capitale du Canada ?', 2),
-(18, 'Quelle est la capitale du Brésil ?', 2);
+(12, 'Quelle est la capitale de la Suisse ?', 2);
 
 INSERT INTO REPONSE(id_reponse, description, is_correct, id_question) VALUES
 (1, 'La baleine bleue', 1, 1),
