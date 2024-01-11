@@ -32,8 +32,6 @@ class ConnexionBD {
 
 }
 
-$coco = new ConnexionBD();
-$coco->drop_all();
 
 
 

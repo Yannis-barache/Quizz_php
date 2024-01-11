@@ -1,24 +1,64 @@
 <?php
-include '../ConnexionBD.php';
-
-$connexionbd = new ConnexionBD('localhost', 'root', 'barachou', 'DBquiz');
-$connexion = $connexionbd->connecter();
-
-
-if (!empty($_GET['id'])) {
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM QUESTION WHERE id_quiz = $id";
-    $result = $connexion->query($sql);
-    $quiz = $result->fetchall(PDO::FETCH_ASSOC);
-    echo json_encode($quiz);
-    $result->closeCursor();
-    $connexionbd->deconnecter();
-} else {
-    $sql = "SELECT * FROM quiz";
-    $result = $connexion->query($sql);
-    $quizzes = $result->fetchAll(PDO::FETCH_ASSOC);
-    $result->closeCursor();
-    $connexionbd->deconnecter();
-    echo json_encode($quizzes);
+include '../SQL/ConnexionBD.php';
+$bdd = new ConnexionBD();
+$connexion = $bdd->get_connexion();
+if ($_GET['id'] != null) {
+    $quiz = $connexion->query("SELECT * FROM QUIZ WHERE id_quiz = {$_GET['id']}");
+    $requete = "SELECT * FROM QUESTION WHERE id_quiz = {$_GET['id']}";
 }
+else {
+    header('Location: accueil.php');
+}
+?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="./css/quiz.css">
+</head>
+<body>
+<h1><?php echo $quiz->fetch(PDO::FETCH_ASSOC)['title'] ?></h1>
+
+<?php
+$resultat = $connexion->query($requete);
+$questions = $resultat->fetchAll(PDO::FETCH_ASSOC);
+$resultat->closeCursor();
+$bdd->deconnecter();
+
+if (count($questions) == 0) {
+    header('Location: accueil.php');
+}
+
+$i=1;
+
+echo "<form action='resultat.php' method='post'>".PHP_EOL;
+echo "<input type='hidden' name='id_quiz' value='{$_GET['id']}'>".PHP_EOL;
+foreach ($questions as $question) {
+    echo "<fieldset>".PHP_EOL;
+    echo "<legend>Question {$i}</legend>".PHP_EOL;
+    echo "<p>{$question['description']}</p>".PHP_EOL;
+    $requete = "SELECT * FROM ANSWER WHERE id_question = {$question['id_question']}";
+    $resultat = $connexion->query($requete);
+    $reponses = $resultat->fetchAll(PDO::FETCH_ASSOC);
+    $resultat->closeCursor();
+    foreach ($reponses as $reponse) {
+        if ($question['id_type'] == 3) {
+            echo "<input type='text' name='{$question['id_question']}' placeholder='Votre réponse'><br>".PHP_EOL;
+        }
+        elseif ($question['id_type'] == 2) {
+            echo "<input type='checkbox' name='{$question['id_question']}' value='{$reponse['id_answer']}'>{$reponse['description']}<br>".PHP_EOL;
+        }
+        else {
+            echo "<input type='radio' name='question{$question['id_question']}' value='{$reponse['id_answer']}'>{$reponse['description']}<br>".PHP_EOL;
+        }
+    }
+    echo "</fieldset>".PHP_EOL;
+    $i++;
+}
+
+echo "<input type='submit' value='Valider'>".PHP_EOL;
+echo "</form>".PHP_EOL;
+
+
 ?>

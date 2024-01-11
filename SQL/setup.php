@@ -72,7 +72,7 @@ $types = array(
     array(
         'id_type' => 1,
         'description' => 'Choix unique',
-        'multiple_choice' => true,
+        'multiple_choice' => false
     ),
     array(
         'id_type' => 2,
