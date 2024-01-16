@@ -38,19 +38,19 @@ foreach ($questions as $question) {
     echo "<fieldset>".PHP_EOL;
     echo "<legend>Question {$i}</legend>".PHP_EOL;
     echo "<p>{$question['description']}</p>".PHP_EOL;
-    $requete = "SELECT * FROM ANSWER WHERE id_question = {$question['id_question']}";
+    $requete = "SELECT * FROM OPTIONS WHERE id_question = {$question['id_question']}";
     $resultat = $connexion->query($requete);
     $reponses = $resultat->fetchAll(PDO::FETCH_ASSOC);
     $resultat->closeCursor();
+    if ($reponses == null) {
+        echo "<input type='text' name='{$question['id_question']}' placeholder='Votre réponse'><br>".PHP_EOL;
+    }
     foreach ($reponses as $reponse) {
-        if ($question['id_type'] == 3) {
-            echo "<input type='text' name='{$question['id_question']}' placeholder='Votre réponse'><br>".PHP_EOL;
+        if ($question['id_type'] == 2) {
+            echo "<input type='checkbox' name='{$question['id_question']}' value='{$reponse['id_option']}'>{$reponse['description']}<br>".PHP_EOL;
         }
-        elseif ($question['id_type'] == 2) {
-            echo "<input type='checkbox' name='{$question['id_question']}' value='{$reponse['id_answer']}'>{$reponse['description']}<br>".PHP_EOL;
-        }
-        else {
-            echo "<input type='radio' name='question{$question['id_question']}' value='{$reponse['id_answer']}'>{$reponse['description']}<br>".PHP_EOL;
+        elseif ($question['id_type'] == 1) {
+            echo "<input type='radio' name='{$question['id_question']}' value='{$reponse['id_option']}'>{$reponse['description']}<br>".PHP_EOL;
         }
     }
     echo "</fieldset>".PHP_EOL;

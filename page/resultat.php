@@ -35,65 +35,91 @@
 
         $tab = array();
 
-        foreach ($_POST as $key => $value) {
-            $ligne = array();
-            $ligne['id_question'] = $key;
-            $ligne['reponse'] = $value;
-            $tab[] = $ligne;
-            var_dump($tab);
-            if ($key == 'id_quiz') {
-                continue;
-            }
-            $ligne = array();
-            $ligne['id_question'] = $key;
-            $ligne['reponse'] = $value;
-            $tab[] = $ligne;
-            if ($key != 'question') {
-                if (!$value) {
-                    $value = 'Aucune';
-                }
-                else {
+        foreach ($questions as $question) {
+            $requete = "SELECT * FROM OPTIONS WHERE id_question = {$question['id_question']}";
+            $resultat = $connexion->query($requete);
+            $reponses = $resultat->fetchAll(PDO::FETCH_ASSOC);
+            $resultat->closeCursor();
 
-                    if (is_array($value)) {
-                        $value = implode(',', $value);
+            $tab[$question['id_question']] = array();
+            foreach ($reponses as $reponse) {
+                if (isset($_POST[$question['id_question']]) && is_array($_POST[$question['id_question']])) {
+                    if (in_array($reponse['id_option'], $_GET[$question['id_question']])) {
+                        array_push($tab[$question['id_question']], $reponse['id_option']);
                     }
-                    $requete = "SELECT * FROM ANSWER WHERE description = '$value' and id_question = $key";
-                    $resultat = $connexion->query($requete);
-                    $reponse = $resultat->fetch(PDO::FETCH_ASSOC);
-                    if (!array($reponse)) {
-                        if ($reponse['is_correct']) {
-                            $nb_bonnes_reponses++;
-                        }
-                        else {
-                            $nb_mauvaises_reponses++;
-                        }
-                    }
-                    else {
-                        $nb_mauvaises_reponses++;
-                    }
-                    $resultat->closeCursor();
-                    $reponses_donnees[] = $reponse;
                 }
-
+                elseif (isset($_POST[$question['id_question']]) && $_POST[$question['id_question']] == $reponse['id_option']) {
+                    array_push($tab[$question['id_question']], $reponse['id_option']);
+                }
             }
         }
-        foreach ($questions as $question) {
-            $reponses_correctes = $connexion->query("SELECT * FROM ANSWER WHERE id_question = {$question['id_question']} AND is_correct = 1");
-            $reponses_correctes = $reponses_correctes->fetchAll(PDO::FETCH_ASSOC);
-            $reponses_correctes = array_column($reponses_correctes, 'description');
-            $reponses_correctes = implode(',', $reponses_correctes);
-            $reponses_donnees = implode(',', $reponses_donnees);
-            $resultat = 'Mauvaise réponse';
-            if ($reponses_correctes == $reponses_donnees) {
-                $resultat = 'Bonne réponse';
-            }
+        var_dump($tab);
+
+        foreach ($questions as $question){
             echo "<tr>".PHP_EOL;
             echo "<td>{$question['description']}</td>".PHP_EOL;
-            echo "<td>{$reponses_donnees}</td>".PHP_EOL;
-            echo "<td>{$reponses_correctes}</td>".PHP_EOL;
-            echo "<td>{$resultat}</td>".PHP_EOL;
-            echo "</tr>".PHP_EOL;
+            echo "<td>";
+            if (isset($_POST[$question['id_question']]) && is_array($_POST[$question['id_question']])) {
+                foreach ($_POST[$question['id_question']] as $reponse) {
+                    $requete = "SELECT * FROM OPTIONS WHERE id_option = {$reponse}";
+                    $resultat = $connexion->query($requete);
+                    $reponse = $resultat->fetch(PDO::FETCH_ASSOC);
+                    $resultat->closeCursor();
+                    echo "{$reponse['description']}<br>".PHP_EOL;
+                }
+            }
+            elseif (isset($_POST[$question['id_question']])) {
+                try {
+                    $requete = "SELECT * FROM OPTIONS WHERE id_option = {$_POST[$question['id_question']]}";
+                    $resultat = $connexion->query($requete);
+                    $reponse = $resultat->fetch(PDO::FETCH_ASSOC);
+                    $resultat->closeCursor();
+                    echo "{$reponse['description']}<br>".PHP_EOL;
+                }
+                catch (Exception $e) {
+                    echo "Erreur(s) dans la rentrée<br>".PHP_EOL;
+                }
+            }
+            echo "</td>".PHP_EOL;
+            echo "<td>";
+            $requete = "SELECT * FROM QUESTION WHERE id_question = {$question['id_question']}";
+            $resultat = $connexion->query($requete);
+            $reponses = $resultat->fetchAll(PDO::FETCH_ASSOC);
+            $resultat->closeCursor();
+            foreach ($reponses as $reponse) {
+                echo "{$reponse['reponse']}<br>".PHP_EOL;
+            }
+            echo "</td>".PHP_EOL;
+            echo "<td>";
+            if (isset($_POST[$question['id_question']]) && is_array($_POST[$question['id_question']])) {
+                if ($_POST[$question['id_question']] == $reponse['reponse']) {
+                    echo "Bonne réponse";
+                    $nb_bonnes_reponses++;
+                }
+                else {
+                    echo "Mauvaise réponse";
+                    $nb_mauvaises_reponses++;
+                }
+            }
+            elseif (isset($_POST[$question['id_question']])) {
+                if ($_POST[$question['id_question']] == $reponse['reponse']) {
+                    echo "Bonne réponse";
+                    $nb_bonnes_reponses++;
+                }
+                else {
+                    echo "Mauvaise réponse";
+                    $nb_mauvaises_reponses++;
+                }
+            }
+            else {
+                echo "Aucune réponse";
+            }
+            echo "</td>".PHP_EOL;
+
+
+
         }
+
 
 
         ?>
