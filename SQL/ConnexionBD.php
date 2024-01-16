@@ -24,10 +24,9 @@ class ConnexionBD {
 
     public function drop_all() : void
     {
-        $this->connexion->exec('DROP TABLE IF EXISTS QUIZ');
-        $this->connexion->exec('DROP TABLE IF EXISTS ANSWER');
-        $this->connexion->exec('DROP TABLE IF EXISTS TYPE');
         $this->connexion->exec('DROP TABLE IF EXISTS QUESTION');
+        $this->connexion->exec('DROP TABLE IF EXISTS TYPE');
+        $this->connexion->exec('DROP TABLE IF EXISTS QUIZ');
     }
 
 }
