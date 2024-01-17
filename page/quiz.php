@@ -49,8 +49,8 @@ foreach ($questions as $question) {
         if ($question['id_type'] == 2) {
             echo "<input type='checkbox' name='{$question['id_question']}' value='{$reponse['id_option']}'>{$reponse['description']}<br>".PHP_EOL;
         }
-        elseif ($question['id_type'] == 1) {
-            echo "<input type='radio' name='{$question['id_question']}' value='{$reponse['id_option']}'>{$reponse['description']}<br>".PHP_EOL;
+        else {
+            echo "<input type='radio' name='question{$question['id_question']}' value='{$reponse['id_answer']}'>{$reponse['description']}<br>".PHP_EOL;
         }
     }
     echo "</fieldset>".PHP_EOL;
