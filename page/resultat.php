@@ -115,13 +115,7 @@
                 echo "Aucune réponse";
             }
             echo "</td>".PHP_EOL;
-
-
-
-            }
         }
-
-
 
         ?>
         </tbody>
