@@ -33,10 +33,6 @@
         $questions = $resultat->fetchAll(PDO::FETCH_ASSOC);
         $resultat->closeCursor();
 
-        echo "<pre>";
-        print_r($_POST);
-        echo "</pre>";
-
 
         $tab = array();
 
