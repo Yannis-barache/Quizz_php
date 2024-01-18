@@ -34,7 +34,6 @@
         $resultat->closeCursor();
 
 
-
         $tab = array();
 
         foreach ($questions as $question) {
@@ -64,8 +63,8 @@
             // REPONSES DONNEES
             echo "<td>";
             $reponseDonnee = "";
-            if ($question['id_type'] == 1 && isset($_POST['question'.$question['id_question']])) {
-                $reponseDonnee = $_POST['question'.$question['id_question']];
+            if ($question['id_type'] == 1 && isset($_POST[$question['id_question']])) {
+                $reponseDonnee = $_POST[$question['id_question']];
                 echo $reponseDonnee;
             } elseif ($question['id_type'] == 3 && isset($_POST[$question['id_question']])) {
                 $reponseDonnee = $_POST[$question['id_question']];
@@ -116,6 +115,6 @@
         </tbody>
     </table>
 
-    <p>Vous avez obtenu <?php echo $nb_bonnes_reponses ?> bonne(s) réponse(s) et <?php echo $nb_mauvaises_reponses ?> mauvaise(s) réponse(s).</p>
+    <p>Vous avez obtenu <?php echo $nb_bonnes_reponses ?> bonne(s) réponse(s) sur <?php echo count($questions)?></p>
 
     <button class="retour"><a href="accueil.php">Retour à l'accueil</a></button>
