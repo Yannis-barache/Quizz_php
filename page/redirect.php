@@ -12,7 +12,7 @@
 include '../ConnexionBD.php';
 
 $bdd = new ConnexionBD('localhost', 'root', 'barachou', 'DBQuiz');
-$connexion = $bdd->connecter();
+$connexion = $bdd->get_connexion();
 
 $requete = "SELECT * FROM quiz";
 $resultat = $connexion->query($requete);

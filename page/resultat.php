@@ -6,7 +6,9 @@
     <link rel="stylesheet" href="./css/resultat.css">
 </head>
 <body>
-<h1>Vos résultats</h1>
+    <header>
+        <h1>Vos résultats</h1>
+    </header>
 <section>
     <table>
         <thead>
@@ -40,47 +42,38 @@
             $resultat = $connexion->query($requete);
             $reponses = $resultat->fetchAll(PDO::FETCH_ASSOC);
             $resultat->closeCursor();
-
+        
             $tab[$question['id_question']] = array();
             foreach ($reponses as $reponse) {
                 if (isset($_POST[$question['id_question']]) && is_array($_POST[$question['id_question']])) {
-                    if (in_array($reponse['id_option'], $_GET[$question['id_question']])) {
+                    if (in_array($reponse['id_option'], $_POST[$question['id_question']])) {
                         array_push($tab[$question['id_question']], $reponse['id_option']);
                     }
-                }
-                elseif (isset($_POST[$question['id_question']]) && $_POST[$question['id_question']] == $reponse['id_option']) {
+                } elseif (isset($_POST[$question['id_question']]) && $_POST[$question['id_question']] == $reponse['id_option']) {
                     array_push($tab[$question['id_question']], $reponse['id_option']);
                 }
             }
-        }
-        var_dump($tab);
 
-        foreach ($questions as $question){
+        }  
+
+        foreach ($questions as $question) {
             echo "<tr>".PHP_EOL;
+            // QUESTIONS
             echo "<td>{$question['description']}</td>".PHP_EOL;
+
+            // REPONSES DONNEES
             echo "<td>";
-            if (isset($_POST[$question['id_question']]) && is_array($_POST[$question['id_question']])) {
-                foreach ($_POST[$question['id_question']] as $reponse) {
-                    $requete = "SELECT * FROM OPTIONS WHERE id_option = {$reponse}";
-                    $resultat = $connexion->query($requete);
-                    $reponse = $resultat->fetch(PDO::FETCH_ASSOC);
-                    $resultat->closeCursor();
-                    echo "{$reponse['description']}<br>".PHP_EOL;
-                }
-            }
-            elseif (isset($_POST[$question['id_question']])) {
-                try {
-                    $requete = "SELECT * FROM OPTIONS WHERE id_option = {$_POST[$question['id_question']]}";
-                    $resultat = $connexion->query($requete);
-                    $reponse = $resultat->fetch(PDO::FETCH_ASSOC);
-                    $resultat->closeCursor();
-                    echo "{$reponse['description']}<br>".PHP_EOL;
-                }
-                catch (Exception $e) {
-                    echo "Erreur(s) dans la rentrée<br>".PHP_EOL;
-                }
+            $reponseDonnee = "";
+            if ($question['id_type'] == 1 && isset($_POST['question'.$question['id_question']])) {
+                $reponseDonnee = $_POST['question'.$question['id_question']];
+                echo $reponseDonnee;
+            } elseif ($question['id_type'] == 3 && isset($_POST[$question['id_question']])) {
+                $reponseDonnee = $_POST[$question['id_question']];
+                echo $reponseDonnee;
             }
             echo "</td>".PHP_EOL;
+
+            // REPONSES CORRECTES
             echo "<td>";
             $requete = "SELECT * FROM QUESTION WHERE id_question = {$question['id_question']}";
             $resultat = $connexion->query($requete);
@@ -90,9 +83,11 @@
                 echo "{$reponse['reponse']}<br>".PHP_EOL;
             }
             echo "</td>".PHP_EOL;
+
+            // RESULTAT
             echo "<td>";
-            if (isset($_POST[$question['id_question']]) && is_array($_POST[$question['id_question']])) {
-                if ($_POST[$question['id_question']] == $reponse['reponse']) {
+            if ($question['id_type'] == 1 && isset($_POST['question'.$question['id_question']])) {
+                if (strtolower($reponseDonnee) == strtolower($reponse['reponse'])) {
                     echo "Bonne réponse";
                     $nb_bonnes_reponses++;
                 }
@@ -101,8 +96,8 @@
                     $nb_mauvaises_reponses++;
                 }
             }
-            elseif (isset($_POST[$question['id_question']])) {
-                if ($_POST[$question['id_question']] == $reponse['reponse']) {
+            elseif (isset($_POST[$question['id_question']]) && $reponseDonnee != "") {
+                if (strtolower($reponseDonnee) == strtolower($reponse['reponse'])) {
                     echo "Bonne réponse";
                     $nb_bonnes_reponses++;
                 }
@@ -119,6 +114,8 @@
 
         ?>
         </tbody>
+    </table>
 
+    <p>Vous avez obtenu <?php echo $nb_bonnes_reponses ?> bonne(s) réponse(s) et <?php echo $nb_mauvaises_reponses ?> mauvaise(s) réponse(s).</p>
 
-
+    <button class="retour"><a href="accueil.php">Retour à l'accueil</a></button>

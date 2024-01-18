@@ -1,6 +1,26 @@
 html {
     font-family: 'Roboto', sans-serif;
 }
+
+body{
+    background-image: linear-gradient(to right, #fc5c7d, #6a82fb);
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, #fc5c7d, #6a82fb);
+}
+
+header{
+    text-align: center;
+    margin: 0 auto;
+    padding: 2%;
+}
+
 section {
     display: flex;
     flex-wrap: wrap;

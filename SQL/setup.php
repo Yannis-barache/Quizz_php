@@ -280,7 +280,7 @@ foreach ($types as $ligne ){
     $statement->execute();
 }
 
-$insert = 'INSERT INTO QUESTION(id_question, description,description, id_quiz, id_type) VALUES (:id_question,:description,:reponse,:id_quiz,:id_type)';
+$insert = 'INSERT INTO QUESTION(id_question, description, reponse, id_quiz, id_type) VALUES (:id_question,:description,:reponse,:id_quiz,:id_type)';
 $statement = $connexion->prepare($insert);
 $statement->bindParam(':id_question',$id_question);
 $statement->bindParam(':description',$description);
@@ -304,6 +304,7 @@ $statement = $connexion->prepare($insert);
 $statement->bindParam(':id_option',$id_option);
 $statement->bindParam(':description',$description);
 $statement->bindParam(':id_question',$id_question);
+$connexion->exec('DELETE FROM OPTIONS');
 foreach ($options as $ligne ){
     $id_option = $ligne['id_option'];
     $description = $ligne['description'];
