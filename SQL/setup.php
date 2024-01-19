@@ -216,7 +216,7 @@ $options = array(
     ),
     array(
         'id_option' => 9,
-        'description' => 'Le girafe',
+        'description' => 'La girafe',
         'id_question' => 3,
     ),
     array(
@@ -258,6 +258,7 @@ $statement = $connexion->prepare($insert);
 $statement->bindParam(':id_quiz',$id_quiz);
 $statement->bindParam(':title',$title);
 $statement->bindParam(':description',$description);
+
 
 foreach ($quizs as $ligne ){
     $id_quiz = $ligne['id_quiz'];

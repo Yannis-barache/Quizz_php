@@ -1,27 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Vos résultats</title>
-    <link rel="stylesheet" href="./css/resultat.css">
-</head>
-<body>
-    <header>
-        <h1>Vos résultats</h1>
-    </header>
-<section>
-    <table>
-        <thead>
-        <tr>
-            <th>Question</th>
-            <th>Réponse(s) donnée(s)</th>
-            <th>Réponse(s) correcte(s)</th>
-            <th>Résultat</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        include '../SQL/ConnexionBD.php';
+<?php include '../SQL/ConnexionBD.php';
         $nb_bonnes_reponses = 0;
         $nb_mauvaises_reponses = 0;
 
@@ -54,6 +31,31 @@
             }
 
         }  
+?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Vos résultats</title>
+    <link rel="stylesheet" href="./css/resultat.css">
+</head>
+<body>
+    <header>
+        <h1>Vos résultats</h1>
+    </header>
+<section>
+    <table>
+        <thead>
+        <tr>
+            <th>Question</th>
+            <th>Réponse(s) donnée(s)</th>
+            <th>Réponse(s) correcte(s)</th>
+            <th>Résultat</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
 
         foreach ($questions as $question) {
             echo "<tr>".PHP_EOL;

@@ -48,6 +48,10 @@ button {
     cursor: pointer;
     overflow: hidden;
   }
+
+  button a {
+    color: #ddd;
+  }
   
   button span:not(:nth-child(6)) {
     position: absolute;
@@ -90,3 +94,6 @@ button {
     transition: 1.5s ease;
   }
     
+  button a{
+    text-decoration: none;
+  }

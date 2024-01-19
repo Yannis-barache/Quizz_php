@@ -22,7 +22,7 @@ if ($_GET['id'] != null) {
     <header>
         <h1><?php echo $quiz->fetch(PDO::FETCH_ASSOC)['title'] ?></h1>
     </header>
-    <button class='retour'><a href="accueil.php">Retour</a></button>
+    <button class='retour'><a href="PageAccueil.php">Retour</a></button>
     <?php
     $resultat = $connexion->query($requete);
     $questions = $resultat->fetchAll(PDO::FETCH_ASSOC);
@@ -30,12 +30,12 @@ if ($_GET['id'] != null) {
     $bdd->deconnecter();
 
     if (count($questions) == 0) {
-        header('Location: accueil.php');
+        header('Location: PageAccueil.php');
     }
 
     $i = 1;
 
-    echo "<form action='resultat.php' method='post'>" . PHP_EOL;
+    echo "<form action='PageResultat.php' method='post'>" . PHP_EOL;
     echo "<input type='hidden' name='id_quiz' value='{$_GET['id']}'>" . PHP_EOL;
     foreach ($questions as $question) {
         echo "<fieldset>" . PHP_EOL;
