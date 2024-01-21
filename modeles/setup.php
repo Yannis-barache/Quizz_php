@@ -1,6 +1,6 @@
 <?php
 include 'ConnexionBD.php';
-
+use Modeles\ConnexionBD;
 $coco = new ConnexionBD();
 $connexion = $coco->get_connexion();
 
