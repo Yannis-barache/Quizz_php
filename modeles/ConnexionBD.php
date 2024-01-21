@@ -1,5 +1,8 @@
 <?php
-
+namespace Modeles;
+use PDO;
+use PDOException;
+use Exception;
 class ConnexionBD
 {
     private $connexion;

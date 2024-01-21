@@ -1,29 +1,29 @@
-<?php 
+<?php
+namespace Modeles;
 
-class Quiz {
-    private $questions;
-    private $answers;
+use PDO;
+class Quiz
+{
+    private $quizData;
 
-    public function __construct() {
-        $this->questions = array();
-        $this->answers = array();
+    public function __construct()
+    {
+        $this->quizData = array();
     }
 
-    public function addQuestion($question, $answer) {
-        $this->questions[] = $question;
-        $this->answers[] = $answer;
+    public function addQuestion($questionID, $answer)
+    {
+        $this->quizData[$questionID] = $answer;
     }
 
-    public function getQuestions() {
-        return $this->questions;
+    public function getQuizData()
+    {
+        return $this->quizData;
     }
 
-    public function getAnswers() {
-        return $this->answers;
-    }
-
-    public function displayQuizzes() {
-        include '../SQL/ConnexionBD.php';
+    public function displayQuizzes()
+    {
+        require '../modeles/ConnexionBD.php';
 
         $bdd = new ConnexionBD();
         $connexion = $bdd->get_connexion();
@@ -46,12 +46,10 @@ class Quiz {
             if ($nb_questions == 0) {
                 echo "<p>Vous ne pouvez pas répondre à ce quiz car il n'y a pas de questions</p>" . PHP_EOL;
             } else {
-                echo "<a href='/page/PageQuiz.php?id={$quiz['id_quiz']}'>Répondre au quiz</a>" . PHP_EOL;
+                echo "<a href='/vues/PageQuiz.php?id={$quiz['id_quiz']}'>Répondre au quiz</a>" . PHP_EOL;
             }
 
             echo "</div>" . PHP_EOL;
         }
     }
 }
-
-?>
